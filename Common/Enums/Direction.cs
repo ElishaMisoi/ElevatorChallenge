@@ -4,6 +4,6 @@
     {
         Up,
         Down,
-        None
+        Stationary
     }
 }
