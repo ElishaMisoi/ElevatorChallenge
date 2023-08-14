@@ -1,5 +1,4 @@
-﻿
-using ElevatorChallenge.Application;
+﻿using ElevatorChallenge.Application;
 using ElevatorChallenge.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,7 +6,7 @@ namespace ElevatorChallenge
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             // Create a service collection
             var services = new ServiceCollection();
@@ -25,7 +24,7 @@ namespace ElevatorChallenge
             ElevatorApp elevatorApp = new ElevatorApp(elevatorService);
 
             // Run
-            await elevatorApp.Run(elevatorMaxCapacity: 8);
+            elevatorApp.Run(elevatorMaxCapacity: 10);
 
             // Dispose serviceProvider when done
             if (serviceProvider is IDisposable disposable)
