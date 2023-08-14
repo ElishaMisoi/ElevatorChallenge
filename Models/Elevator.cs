@@ -5,90 +5,78 @@ namespace ElevatorChallenge.Models
     public class Elevator
     {
         public int CurrentFloor { get; private set; }
-        public Direction CurrentDirection { get; private set; }
-        public int MaxCapacity { get; private set; }
-        public int CurrentCapacity { get; private set; }
-        public int ElevatorId { get; private set; }
+        public Direction Direction { get; private set; }
+        public int Capacity { get; private set; }
+        public int CurrentLoad { get; private set; }
+        public int ElevatorNumber { get; private set; }
 
-        public Elevator(int elevatorId, int maxCapacity)
+        public Elevator(int elevatorNumber, int capacity)
         {
-            ElevatorId = elevatorId;
+            ElevatorNumber = elevatorNumber;
             CurrentFloor = 1;
-            CurrentDirection = Direction.None;
-            MaxCapacity = maxCapacity;
-            CurrentCapacity = 0;
+            Direction = Direction.Stationary;
+            Capacity = capacity;
+            CurrentLoad = 0;
         }
 
         public void MoveToFloor(int floor)
         {
-            if (floor > CurrentFloor)
-                CurrentDirection = Direction.Up;
-            else if (floor < CurrentFloor)
-                CurrentDirection = Direction.Down;
-
-            Console.WriteLine($"Elevator {ElevatorId} is moving {CurrentDirection} to floor {floor}");
-
-            //int durationInSeconds = 10;
-            //Timer timer = new Timer(PrintArrow, null, 0, 1000);
-
-            //// Wait for the specified duration
-            //Thread.Sleep(durationInSeconds * 1000);
-
-            //// Dispose the timer when done
-            //timer.Dispose();
-
-            //Console.WriteLine("Timer stopped.");
-
+            Direction = CurrentFloor < floor ? Direction.Up : Direction.Down;
             while (CurrentFloor != floor)
             {
-                if (CurrentDirection == Direction.Up)
+                Console.WriteLine($"Elevator {ElevatorNumber} is moving to floor {floor}");
+                if (Direction == Direction.Up)
                     CurrentFloor++;
                 else
                     CurrentFloor--;
-
-                Console.WriteLine($"Elevator {ElevatorId} is now at floor {CurrentFloor}");
             }
-
-            CurrentDirection = Direction.None;
-            Console.WriteLine($"Elevator {ElevatorId} has arrived at floor {CurrentFloor}");
+            Direction = Direction.Stationary;
+            OpenDoors();
         }
 
-        static void PrintArrow(object state)
+        public void OpenDoors()
         {
-            Console.Write(">>");
+            Console.WriteLine($"Elevator {ElevatorNumber} doors opened.");
         }
 
-        public bool IsAvailable()
+        public void CloseDoors()
         {
-            return CurrentDirection == Direction.None && CurrentCapacity < MaxCapacity;
+            Console.WriteLine($"Elevator {ElevatorNumber} doors closed.");
         }
 
-        public void LoadPassenger(int count)
+        public void LoadPeople(int numberOfPeople)
         {
-            if (CurrentCapacity + count <= MaxCapacity)
+            if (CurrentLoad + numberOfPeople <= Capacity)
             {
-                CurrentCapacity += count;
-                Console.WriteLine($"{count} passengers loaded. Current capacity: {CurrentCapacity}");
+                CurrentLoad += numberOfPeople;
+                OpenDoors();
+                Console.WriteLine($"{numberOfPeople} people loaded into Elevator {ElevatorNumber}.");
+                CloseDoors();
             }
             else
             {
-                Console.WriteLine($"Elevator {ElevatorId} is at full capacity. Cannot load more passengers.");
+                Console.WriteLine($"Elevator {ElevatorNumber} Cannot load people. Exceeds capacity.");
             }
         }
 
-        public void UnloadPassengers(int passengersToUnload = 0)
+        public void UnloadPeople(int numberOfPeople)
         {
-            if (passengersToUnload == 0)
-                return;
-
-            if (passengersToUnload > CurrentCapacity)
-                passengersToUnload = CurrentCapacity;
-
-            if (CurrentCapacity > 0 && passengersToUnload > 0 && passengersToUnload <= CurrentCapacity)
+            if (CurrentLoad >= numberOfPeople)
             {
-                Console.WriteLine($"Elevator {ElevatorId} has unloaded {passengersToUnload}.");
-                CurrentCapacity = CurrentCapacity - passengersToUnload;
+                CurrentLoad -= numberOfPeople;
+                OpenDoors();
+                Console.WriteLine($"{numberOfPeople} people unloaded from Elevator {ElevatorNumber}.");
+                CloseDoors();
             }
+            else
+            {
+                Console.WriteLine($"Elevator {ElevatorNumber} Cannot unload more people than currently inside.");
+            }
+        }
+
+        public void UpdateStatus()
+        {
+            Console.WriteLine($"Elevator {ElevatorNumber} on floor {CurrentFloor}, {Direction} direction, {CurrentLoad}/{Capacity} people.");
         }
     }
 }
