@@ -2,6 +2,12 @@
 
 namespace ElevatorChallenge.Application
 {
+    /// <summary>
+    /// This is the Elevator Application
+    /// It provides the entry point of interructing with the 
+    /// elevators inluding moving an elevator, loading people into an elevator, unloading people
+    /// out of an elevator, adding people to a floor and removing people from a floor
+    /// </summary>
     public class ElevatorApp
     {
         private readonly IElevatorService _elevatorService;
@@ -11,6 +17,10 @@ namespace ElevatorChallenge.Application
             _elevatorService = elevatorService;
         }
 
+        /// <summary>
+        /// Initializes the application
+        /// </summary>
+        /// <param name="elevatorMaxCapacity">The maximum capacity of each elevator</param>
         public void Run(int elevatorMaxCapacity = 10)
         {
             bool initialized = InitializeBaseInputs(elevatorMaxCapacity);
@@ -25,6 +35,12 @@ namespace ElevatorChallenge.Application
             }
         }
 
+        /// <summary>
+        /// Initializes the base inputs. 
+        /// That is the number of floors and elevators to be used
+        /// </summary>
+        /// <param name="elevatorMaxCapacity">The maximum capacity of each elevator</param>
+        /// <returns></returns>
         private bool InitializeBaseInputs(int elevatorMaxCapacity = 10)
         {
             while (true)
@@ -60,6 +76,9 @@ namespace ElevatorChallenge.Application
             return true;
         }
 
+        /// <summary>
+        /// Displays choices to the user on the Console
+        /// </summary>
         private void DisplayChoices()
         {
             while (true)
@@ -99,9 +118,8 @@ namespace ElevatorChallenge.Application
                             RemovePeopleFromFloor();
                             break;
                         case 4:
-                            GetElevatorStatuses();
+                            GetElevatorStatusesAndDirections();
                             break;
-
                         case 5:
                             LoadPeopleIntoElevator();
                             break;
@@ -114,29 +132,19 @@ namespace ElevatorChallenge.Application
                         case 8:
                             Console.WriteLine("Exiting...");
                             return;
-
                         default:
                             ShowInputError();
                             break;
                     }
 
-                    Console.WriteLine();
+                    Console.WriteLine("\n");
                 }
             }
         }
 
-        private void ShowInitializationInputError()
-        {
-            Console.WriteLine("Invalid input. Please try again.\n\n");
-            InitializeBaseInputs();
-        }
-
-        private void ShowInputError()
-        {
-            Console.WriteLine("Invalid input. Please try again.\n\n");
-            DisplayChoices();
-        }
-
+        /// <summary>
+        /// Requests the nearest elevator to move a given floor
+        /// </summary>
         private void RequestNearestElevator()
         {
             Console.Write("Enter your current floor number: ");
@@ -154,6 +162,9 @@ namespace ElevatorChallenge.Application
             _elevatorService.RequestNearestElevator(floorNumber);
         }
 
+        /// <summary>
+        /// Adds people to a given floor
+        /// </summary>
         private void AddPeopleToFloor()
         {
             Console.Write("Enter floor number: ");
@@ -183,6 +194,9 @@ namespace ElevatorChallenge.Application
             _elevatorService.AddPeopleToFloor(floorNumber, numberOfPeople);
         }
 
+        /// <summary>
+        /// Removes people from a given floor
+        /// </summary>
         private void RemovePeopleFromFloor()
         {
             Console.Write("Enter floor number: ");
@@ -212,11 +226,17 @@ namespace ElevatorChallenge.Application
             _elevatorService.RemovePeopleFromFloor(floorNumber, numberOfPeople);
         }
 
-        private void GetElevatorStatuses()
+        /// <summary>
+        /// Provides a summary of the statuses and directions of all elevators
+        /// </summary>
+        private void GetElevatorStatusesAndDirections()
         {
-            _elevatorService.GetElevatorStatuses();
+            _elevatorService.GetElevatorStatusesAndDirections();
         }
 
+        /// <summary>
+        /// Loads a given number of people to a given elevator
+        /// </summary>
         private void LoadPeopleIntoElevator()
         {
             Console.Write("Enter elevator number: ");
@@ -246,6 +266,9 @@ namespace ElevatorChallenge.Application
             _elevatorService.LoadPeopleIntoElevator(elevatorNumber, numberOfPeople);
         }
 
+        /// <summary>
+        /// Unloads a given number of people out of a given elevator
+        /// </summary>
         private void UnLoadPeopleOutOfElevator()
         {
             Console.Write("Enter elevator number: ");
@@ -275,6 +298,9 @@ namespace ElevatorChallenge.Application
             _elevatorService.UnLoadPeopleOutOfElevator(elevatorNumber, numberOfPeople);
         }
 
+        /// <summary>
+        /// Moves an elevator from a given floor to a given floor
+        /// </summary>
         private void MoveElevatorToFloor()
         {
             Console.Write("Enter your current floor number: ");
@@ -302,6 +328,18 @@ namespace ElevatorChallenge.Application
             }
 
             _elevatorService.MoveElevatorToFloor(floorNumber, destinationFloor);
+        }
+
+        private void ShowInitializationInputError()
+        {
+            Console.WriteLine("Invalid input. Please try again.\n");
+            InitializeBaseInputs();
+        }
+
+        private void ShowInputError()
+        {
+            Console.WriteLine("Invalid input. Please try again.\n");
+            DisplayChoices();
         }
     }
 }
