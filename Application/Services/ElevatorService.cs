@@ -4,6 +4,13 @@ using ElevatorChallenge.Models;
 
 namespace ElevatorChallenge.Application.Services
 {
+    /// <summary>
+    /// This is the Elevator Service.
+    /// The service provides a way to interact with the elevators, 
+    /// including calling them to a specific floor and setting 
+    /// the number of people waiting on each floor.
+    /// It supports multiple floors and multiple elevators.
+    /// </summary>
     public class ElevatorService : IElevatorService
     {
         private List<Elevator>? _elevators;
@@ -15,6 +22,12 @@ namespace ElevatorChallenge.Application.Services
             _isInitialized = false;
         }
 
+        /// <summary>
+        /// Initializes Elevater Service.
+        /// </summary>
+        /// <param name="numberOfElevators">The number of elevators to be used</param>
+        /// <param name="numberOfFloors">The number of floors to be used</param>
+        /// <param name="maxCapacity">The maximum capacity of an elevator</param>
         public void Initialize(int numberOfElevators, int numberOfFloors, int maxCapacity = 10)
         {
             if (numberOfElevators < 1)
@@ -40,6 +53,11 @@ namespace ElevatorChallenge.Application.Services
             _isInitialized = true;
         }
 
+        /// <summary>
+        /// Requests the nearest elevator to a provided floor
+        /// </summary>
+        /// <param name="floorNumber">The floor number where the request is coming from</param>
+        /// <returns>Returns the nearest Elevator if available</returns>
         public Elevator? RequestNearestElevator(int floorNumber)
         {
             if (!_isInitialized)
@@ -67,7 +85,6 @@ namespace ElevatorChallenge.Application.Services
                 if (nearestElevator != null)
                 {
                     nearestElevator.MoveToFloor(floorNumber);
-                    Console.WriteLine($"Elevator {nearestElevator.ElevatorNumber} has arrived at floor {floorNumber}");
                     return nearestElevator;
                 }
                 else
@@ -80,6 +97,12 @@ namespace ElevatorChallenge.Application.Services
             return null;
         }
 
+        /// <summary>
+        /// Moves an Elevator from the floor where the request is coming from
+        /// to a destination floor
+        /// </summary>
+        /// <param name="floorNumber">The floor number where the request is coming from</param>
+        /// <param name="destinationFloor">The destination floor where the elavtor is destined</param>
         public void MoveElevatorToFloor(int floorNumber, int destinationFloor)
         {
             Elevator? nearestElevator = RequestNearestElevator(floorNumber);
@@ -87,10 +110,13 @@ namespace ElevatorChallenge.Application.Services
             if (nearestElevator != null)
             {
                 nearestElevator.MoveToFloor(destinationFloor);
-                Console.WriteLine($"Elevator {nearestElevator.ElevatorNumber} has arrived at floor {floorNumber}");
             }
         }
 
+        /// <summary>
+        /// Adds a floor to the list of floors
+        /// </summary>
+        /// <param name="floor">The floor to be added</param>
         public void AddFloor(Floor floor)
         {
             if (!_isInitialized)
@@ -99,6 +125,10 @@ namespace ElevatorChallenge.Application.Services
             _floors!.Add(floor);
         }
 
+        /// <summary>
+        /// Removes a floor from the list of floors
+        /// </summary>
+        /// <param name="floor">The floor to be removed</param>
         public void RemoveFloor(Floor floor)
         {
             if (!_isInitialized)
@@ -112,6 +142,11 @@ namespace ElevatorChallenge.Application.Services
             }
         }
 
+        /// <summary>
+        /// Adds people to a given floor
+        /// </summary>
+        /// <param name="floor">The floor where people should be added</param>
+        /// <param name="numberOfPeople">The number of people to be added to the floor</param>
         public void AddPeopleToFloor(int floor, int numberOfPeople)
         {
             if (!_isInitialized)
@@ -128,6 +163,11 @@ namespace ElevatorChallenge.Application.Services
             existingFloor.AddPeople(numberOfPeople);
         }
 
+        /// <summary>
+        /// Removes people from a given floor
+        /// </summary>
+        /// <param name="floor">The floor where people should be removed</param>
+        /// <param name="numberOfPeople">The number of people to be removed from the floor</param>
         public void RemovePeopleFromFloor(int floor, int numberOfPeople)
         {
             if (!_isInitialized)
@@ -144,6 +184,10 @@ namespace ElevatorChallenge.Application.Services
             existingFloor.RemovePeople(numberOfPeople);
         }
 
+        /// <summary>
+        /// Adds an elevator to the list of elevators
+        /// </summary>
+        /// <param name="elevator">The elevator to be added</param>
         public void AddElevator(Elevator elevator)
         {
             if (!_isInitialized)
@@ -152,6 +196,10 @@ namespace ElevatorChallenge.Application.Services
             _elevators!.Add(elevator);
         }
 
+        /// <summary>
+        /// Removes an elevator from the list of elevators
+        /// </summary>
+        /// <param name="elevator">The elevator to be removed</param>
         public void RemoveElevator(Elevator elevator)
         {
             if (!_isInitialized)
@@ -165,6 +213,11 @@ namespace ElevatorChallenge.Application.Services
             }
         }
 
+        /// <summary>
+        /// Loads people into an elevator 
+        /// </summary>
+        /// <param name="elevator">The elevator to load people</param>
+        /// <param name="numberOfPeople">The number of people to be loaded into the elevator</param>
         public void LoadPeopleIntoElevator(int elevator, int numberOfPeople)
         {
             if (!_isInitialized)
@@ -181,6 +234,11 @@ namespace ElevatorChallenge.Application.Services
             existingElevator.LoadPeople(numberOfPeople);
         }
 
+        /// <summary>
+        /// Unloads people out of an elevator
+        /// </summary>
+        /// <param name="elevator">The elevator to unload people</param>
+        /// <param name="numberOfPeople">The number of people to be unloaded out of the elevator</param>
         public void UnLoadPeopleOutOfElevator(int elevator, int numberOfPeople)
         {
             if (!_isInitialized)
@@ -197,7 +255,10 @@ namespace ElevatorChallenge.Application.Services
             existingElevator.UnloadPeople(numberOfPeople);
         }
 
-        public void GetElevatorStatuses()
+        /// <summary>
+        /// Gets the current status and direction of all the elevator
+        /// </summary>
+        public void GetElevatorStatusesAndDirections()
         {
             if (!_isInitialized)
                 ThrowNotInitialized();
