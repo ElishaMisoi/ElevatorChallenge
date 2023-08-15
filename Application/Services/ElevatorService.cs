@@ -63,6 +63,14 @@ namespace ElevatorChallenge.Application.Services
             if (!_isInitialized)
                 throw new InitializationException("Elevator Service not initialized");
 
+            Floor? existingFloor = _floors!.FirstOrDefault(s => s.FloorNumber == floorNumber);
+
+            if (existingFloor == null)
+            {
+                Console.WriteLine($"Floor {floorNumber} does not exist");
+                return null;
+            }
+
             // Find the nearest available elevator
             Elevator? nearestElevator = null;
             int minDistance = int.MaxValue;
@@ -105,6 +113,22 @@ namespace ElevatorChallenge.Application.Services
         /// <param name="destinationFloor">The destination floor where the elavtor is destined</param>
         public void MoveElevatorToFloor(int floorNumber, int destinationFloor)
         {
+            Floor? existingFloor = _floors!.FirstOrDefault(s => s.FloorNumber == floorNumber);
+
+            if (existingFloor == null)
+            {
+                Console.WriteLine($"Floor {floorNumber} does not exist");
+                return;
+            }
+
+            existingFloor = _floors!.FirstOrDefault(s => s.FloorNumber == destinationFloor);
+
+            if (existingFloor == null)
+            {
+                Console.WriteLine($"Floor {destinationFloor} does not exist");
+                return;
+            }
+
             Elevator? nearestElevator = RequestNearestElevator(floorNumber);
 
             if (nearestElevator != null)

@@ -45,7 +45,7 @@ namespace ElevatorChallenge.Application
         {
             while (true)
             {
-                Console.WriteLine($"Welcome to the Elevator System. Maximum capacity of passengers per elevator is {elevatorMaxCapacity}\n\n");
+                Console.WriteLine($"Welcome to the Elevator System. Maximum capacity of passengers per elevator is {elevatorMaxCapacity}\n");
 
                 Console.WriteLine("Enter the number of floors (At least 2 floors)");
 
@@ -83,7 +83,7 @@ namespace ElevatorChallenge.Application
         {
             while (true)
             {
-                Console.WriteLine("Options:");
+                Console.WriteLine("\nOptions:");
                 Console.WriteLine("1. Request Nearest Elevator");
                 Console.WriteLine("2. Add People to Floor");
                 Console.WriteLine("3. Remove People from Floor");
@@ -136,8 +136,6 @@ namespace ElevatorChallenge.Application
                             ShowInputError();
                             break;
                     }
-
-                    Console.WriteLine("\n");
                 }
             }
         }
@@ -147,7 +145,7 @@ namespace ElevatorChallenge.Application
         /// </summary>
         private void RequestNearestElevator()
         {
-            Console.Write("Enter your current floor number: ");
+            Console.Write("\nEnter your current floor number: ");
 
             string? input = Console.ReadLine();
 
@@ -167,7 +165,7 @@ namespace ElevatorChallenge.Application
         /// </summary>
         private void AddPeopleToFloor()
         {
-            Console.Write("Enter floor number: ");
+            Console.Write("\nEnter floor number: ");
 
             string? input = Console.ReadLine();
 
@@ -199,7 +197,7 @@ namespace ElevatorChallenge.Application
         /// </summary>
         private void RemovePeopleFromFloor()
         {
-            Console.Write("Enter floor number: ");
+            Console.Write("\nEnter floor number: ");
 
             string? input = Console.ReadLine();
 
@@ -231,6 +229,7 @@ namespace ElevatorChallenge.Application
         /// </summary>
         private void GetElevatorStatusesAndDirections()
         {
+            Console.WriteLine();
             _elevatorService.GetElevatorStatusesAndDirections();
         }
 
@@ -239,7 +238,7 @@ namespace ElevatorChallenge.Application
         /// </summary>
         private void LoadPeopleIntoElevator()
         {
-            Console.Write("Enter elevator number: ");
+            Console.Write("\nEnter elevator number: ");
 
             string? input = Console.ReadLine();
 
@@ -271,7 +270,7 @@ namespace ElevatorChallenge.Application
         /// </summary>
         private void UnLoadPeopleOutOfElevator()
         {
-            Console.Write("Enter elevator number: ");
+            Console.Write("\nEnter elevator number: ");
 
             string? input = Console.ReadLine();
 
@@ -303,7 +302,7 @@ namespace ElevatorChallenge.Application
         /// </summary>
         private void MoveElevatorToFloor()
         {
-            Console.Write("Enter your current floor number: ");
+            Console.Write("\nEnter your current floor number: ");
 
             string? input = Console.ReadLine();
 

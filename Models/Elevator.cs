@@ -42,10 +42,10 @@ namespace ElevatorChallenge.Models
                 Direction = Direction.Down;
             }
 
+            Console.WriteLine($"Elevator {ElevatorNumber} is moving to floor {floor}");
+
             while (CurrentFloor != floor)
             {
-                Console.WriteLine($"Elevator {ElevatorNumber} is moving to floor {floor}");
-
                 if (Direction == Direction.Up)
                 {
                     CurrentFloor++;
