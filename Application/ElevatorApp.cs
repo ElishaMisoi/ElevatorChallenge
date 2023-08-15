@@ -4,7 +4,7 @@ namespace ElevatorChallenge.Application
 {
     /// <summary>
     /// This is the Elevator Application
-    /// It provides the entry point of interructing with the 
+    /// It provides the entry point of interacting with the 
     /// elevators inluding moving an elevator, loading people into an elevator, unloading people
     /// out of an elevator, adding people to a floor and removing people from a floor
     /// </summary>
