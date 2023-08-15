@@ -17,3 +17,9 @@ Given a pool of elevators, the program should send the nearest available elevato
 
 Allow a weight limit, expressed as a number of people, to be imposed on the elevators. You can assume
 every elevator in the simulation has the same weight limit.
+
+### Hints
+Given a pool of elevators, the program should send the nearest available elevator to that person.
+
+### Extra Credit
+For extra credit, allow a weight limit, expressed as a number of people, to be imposed on the elevators. You can assume every elevator in the simulation has the same weight limit.
